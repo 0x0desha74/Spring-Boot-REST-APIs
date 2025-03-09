@@ -19,7 +19,7 @@ public class EmployeesController {
 
 @GetMapping("/employees/{id}")
     public String getEmployee(@PathVariable int id){
-        return "employee with id: " + id;
+        return "employee with id : " + id;
 }
 
 // DELETE : /api/employees?id=1&name=Mustafa
