@@ -1,31 +1,43 @@
-package in.springrestapi.Controllers;
+    package in.springrestapi.Controllers;
 
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+    import in.springrestapi.Models.Employee;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.web.bind.annotation.*;
 
 
-@RestController ///@Controller + @ResponseBody
-@RequestMapping(value = "/api")
-public class EmployeesController {
+    @RestController ///@Controller + @ResponseBody
+    @RequestMapping(value = "/api")
+    public class EmployeesController {
 
-    //GET : /api/employees
-    @GetMapping( "/employees")
-    public String getEmployees() {
-        return "List of employees";
+        //GET : /api/employees
+        @GetMapping( "/employees")
+        public String getEmployees() {
+            return "List of employees";
+        }
+
+        //GET : /api/employee/1
+
+    @GetMapping("/employees/{id}")
+        public String getEmployee(@PathVariable int id){
+            return "employee with id : " + id;
     }
 
-    //GET : /api/employee/1
+    @PostMapping("/employees")
+    public String addEmployee(@RequestBody Employee employee){
+            return  employee.toString();
+    }
 
-@GetMapping("/employees/{id}")
-    public String getEmployee(@PathVariable int id){
-        return "employee with id : " + id;
-}
+        @PutMapping("/employees")
+        public Employee editEmployee(@RequestBody Employee employee){
+            return  employee;
+        }
 
-// DELETE : /api/employees?id=1&name=Mustafa
-@DeleteMapping("/employees")
-public String deleteEmployee(@RequestParam int id,@RequestParam String name ){
-        return "employee with id: " + id + " and name: " + name ;
-}
 
-}
+    // DELETE : /api/employees?id=1&name=Mustafa
+    @DeleteMapping("/employees")
+    public String deleteEmployee(@RequestParam int id,@RequestParam String name ){
+            return "employee with id: " + id + " and name: " + name ;
+    }
+
+    }
