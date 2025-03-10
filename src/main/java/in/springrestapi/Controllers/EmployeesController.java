@@ -2,20 +2,29 @@
 
 
     import in.springrestapi.Models.Employee;
+    import in.springrestapi.Services.IEmployeeService;
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.stereotype.Controller;
     import org.springframework.web.bind.annotation.*;
+
+    import java.util.List;
 
 
     @RestController
     ///@Controller + @ResponseBody
     @RequestMapping(value = "/api")
     public class EmployeesController {
+        @Autowired
+        private IEmployeeService eService;
+
+
 
         //GET : /api/employees
         @GetMapping("/employees")
-        public String getEmployees() {
-            return "List of employees";
+        public List<Employee> getEmployees() {
+            var employees = eService.getEmployees();
+            return employees;
         }
 
         @Value("${app.name}")
