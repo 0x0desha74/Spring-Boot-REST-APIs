@@ -1,6 +1,6 @@
 package in.springrestapi.Models;
-
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,10 +8,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "employees")
 public class Employee {
-//    @JsonProperty("full_name")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
-//    @JsonIgnore
     private int age;
     private String email;
     private String location;

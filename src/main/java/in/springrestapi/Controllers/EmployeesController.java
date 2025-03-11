@@ -13,7 +13,7 @@
 
     @RestController
     ///@Controller + @ResponseBody
-    @RequestMapping(value = "/api")
+
     public class EmployeesController {
         @Autowired
         private IEmployeeService eService;
@@ -25,16 +25,6 @@
         public List<Employee> getEmployees() {
             var employees = eService.getEmployees();
             return employees;
-        }
-
-        @Value("${app.name}")
-        private String appName;
-        @Value("${app.version}")
-        private String appVersion;
-
-        @GetMapping("/version")
-        public String getVersion() {
-            return appName + " - " + appVersion;
         }
 
 
