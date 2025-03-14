@@ -41,4 +41,10 @@ public class EmployeeService implements IEmployeeService {
         var employee = eRepository.save(entity);
         return employee;
     }
+
+    @Override
+    public List<Employee> getEmployeeByName(String name) {
+        var employees = eRepository.findByName(name);
+        return employees;
+    }
 }
