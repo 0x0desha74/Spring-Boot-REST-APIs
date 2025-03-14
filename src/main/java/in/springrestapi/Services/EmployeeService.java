@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -15,5 +16,29 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public List<Employee> getEmployees() {
         return eRepository.findAll();
+    }
+
+    @Override
+    public Employee SaveEmployee(Employee entity) {
+        return eRepository.save(entity);
+    }
+
+    @Override
+    public Employee getEmployee(Long id) {
+        Optional<Employee> employee =  eRepository.findById(id);
+        if(employee.isPresent())
+        return employee.get();
+            throw new RuntimeException("Employee not found");
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+         eRepository.deleteById(id);
+    }
+
+    @Override
+    public Employee updateEmployee(Employee entity) {
+        var employee = eRepository.save(entity);
+        return employee;
     }
 }
