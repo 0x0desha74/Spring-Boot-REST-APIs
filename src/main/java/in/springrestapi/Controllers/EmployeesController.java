@@ -1,11 +1,14 @@
     package in.springrestapi.Controllers;
 
 
+
     import in.springrestapi.Models.Employee;
     import in.springrestapi.Services.IEmployeeService;
+    import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.stereotype.Controller;
+    import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.*;
 
     import java.util.List;
@@ -32,17 +35,17 @@
         //GET : /api/employee/1
 
         @GetMapping("/employees/{id}")
-        public Employee getEmployee(@PathVariable Long id) {
+        public Employee getEmployee( @PathVariable Long id) {
             return eService.getEmployee(id);
         }
 
         @PostMapping("/employees")
-        public Employee addEmployee(@RequestBody Employee employee) {
+        public Employee addEmployee( @RequestBody @Valid Employee employee) {
             return eService.SaveEmployee(employee);
         }
 
         @PutMapping("/employees")
-        public Employee editEmployee( @RequestBody Employee model) {
+        public Employee editEmployee( @RequestBody @Valid Employee model) {
 
             return eService.updateEmployee(model);
 
@@ -51,7 +54,7 @@
 
         // DELETE : /api/employees?id=1&name=Mustafa
         @DeleteMapping("/employees")
-        public String deleteEmployee(@RequestParam Long id) {
+        public String deleteEmployee(@RequestParam @Valid Long id) {
             eService.deleteEmployee(id);
             return "Employee was deleted";
         }
