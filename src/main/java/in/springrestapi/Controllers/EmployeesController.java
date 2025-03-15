@@ -34,6 +34,13 @@
         public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name) {
             return new ResponseEntity<>(eService.getEmployeeByName(name), HttpStatus.OK);
         }
+
+        @GetMapping("employees/filterByNameAndLocation")
+        public ResponseEntity<List<Employee>> getEmployeesByNameAndLocation(@RequestParam String name,@RequestParam String location)
+        {
+            return new ResponseEntity<>(eService.getEmployeesByNameAndLocation(name,location),HttpStatus.OK);
+        }
+
         //GET : /api/employee/1
         @GetMapping("/employees/{id}")
         public ResponseEntity<Employee> getEmployee( @PathVariable Long id) {

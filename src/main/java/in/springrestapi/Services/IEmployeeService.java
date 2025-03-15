@@ -12,4 +12,5 @@ public interface IEmployeeService {
     void deleteEmployee(Long id);
     Employee updateEmployee(Employee entity);
     List<Employee> getEmployeeByName(String name);
+    List<Employee> getEmployeesByNameAndLocation(String name, String location);
 }

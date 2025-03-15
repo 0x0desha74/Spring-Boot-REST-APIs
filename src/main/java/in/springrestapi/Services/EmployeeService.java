@@ -47,4 +47,10 @@ public class EmployeeService implements IEmployeeService {
         var employees = eRepository.findByName(name);
         return employees;
     }
+
+    @Override
+    public List<Employee> getEmployeesByNameAndLocation(String name, String location) {
+        var employees = eRepository.findByNameAndLocation(name,location);
+        return employees;
+    }
 }
