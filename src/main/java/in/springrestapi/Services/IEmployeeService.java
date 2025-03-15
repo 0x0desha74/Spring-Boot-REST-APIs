@@ -13,4 +13,5 @@ public interface IEmployeeService {
     Employee updateEmployee(Employee entity);
     List<Employee> getEmployeeByName(String name);
     List<Employee> getEmployeesByNameAndLocation(String name, String location);
+    List<Employee> getEmployeesByKeyword(String keyword);
 }

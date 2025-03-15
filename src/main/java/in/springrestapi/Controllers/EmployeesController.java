@@ -1,15 +1,12 @@
     package in.springrestapi.Controllers;
     import in.springrestapi.Models.Employee;
     import in.springrestapi.Services.IEmployeeService;
-    import jakarta.annotation.Nullable;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
-    import org.springframework.http.HttpStatusCode;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
     import java.util.List;
-    import java.util.Optional;
 
 
     @RestController
@@ -27,7 +24,7 @@
             if(name == null || name.isEmpty()){
                 return new ResponseEntity<>(eService.getEmployees(),HttpStatus.OK);
             }
-                return new ResponseEntity<>(eService.getEmployeeByName(name),HttpStatus.OK);
+                return new ResponseEntity<>(eService.getEmployeesByKeyword(name),HttpStatus.OK);
         }
 
         @GetMapping("employees/filterByName")
@@ -47,6 +44,14 @@
             return new ResponseEntity<>(eService.getEmployee(id),HttpStatus.OK) ;
         }
 
+        @GetMapping("employees/filterByKeyword")
+        public ResponseEntity<List<Employee>> getEmployeesByPartOfName(@RequestParam String name)
+        {
+            return new ResponseEntity<>(eService.getEmployeesByKeyword(name),HttpStatus.OK);
+        }
+
+
+        //POST : /api/v1/employees
         @PostMapping("/employees")
         public ResponseEntity<Employee> addEmployee( @RequestBody @Valid Employee employee) {
             return new ResponseEntity<>( eService.SaveEmployee(employee),HttpStatus.CREATED);

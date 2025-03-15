@@ -38,19 +38,24 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee updateEmployee(Employee entity) {
-        var employee = eRepository.save(entity);
-        return employee;
+        return eRepository.save(entity);
+
     }
 
     @Override
     public List<Employee> getEmployeeByName(String name) {
-        var employees = eRepository.findByName(name);
-        return employees;
+        return eRepository.findByName(name);
+
     }
 
     @Override
     public List<Employee> getEmployeesByNameAndLocation(String name, String location) {
-        var employees = eRepository.findByNameAndLocation(name,location);
-        return employees;
+        return eRepository.findByNameAndLocation(name,location);
+
+    }
+
+    @Override
+    public List<Employee> getEmployeesByKeyword(String keyword) {
+        return eRepository.findByNameContaining(keyword);
     }
 }
