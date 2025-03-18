@@ -1,6 +1,6 @@
-    package in.springrestapi.Controllers;
-    import in.springrestapi.Models.Employee;
-    import in.springrestapi.Services.IEmployeeService;
+    package in.springrestapi.controller;
+    import in.springrestapi.model.Employee;
+    import in.springrestapi.service.EmployeeService;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
@@ -14,15 +14,15 @@
 
     public class EmployeesController {
         @Autowired
-        private IEmployeeService eService;
+        private EmployeeService eService;
 
 
 
-        //GET : /api/employees
+        //GET : /api/v1/employees
         @GetMapping("/employees")
-        public ResponseEntity<List<Employee>> getEmployees( @RequestParam(required = false) String name) {
+        public ResponseEntity<List<Employee>> getEmployees( @RequestParam(required = false) String name,@RequestParam int pageNumber,@RequestParam int pageSize) {
             if(name == null || name.isEmpty()){
-                return new ResponseEntity<>(eService.getEmployees(),HttpStatus.OK);
+                return new ResponseEntity<>(eService.getEmployees(pageNumber,pageSize),HttpStatus.OK);
             }
                 return new ResponseEntity<>(eService.getEmployeesByKeyword(name),HttpStatus.OK);
         }
@@ -50,6 +50,11 @@
             return new ResponseEntity<>(eService.getEmployeesByKeyword(name),HttpStatus.OK);
         }
 
+
+        @GetMapping("employees/filter")
+        public ResponseEntity<List<Employee>> getEmployeeByNameOrLocation(@RequestParam String name,@RequestParam String location){
+            return new ResponseEntity<>(eService.getEmployeesByNameOrLocation(name,location),HttpStatus.OK);
+        }
 
         //POST : /api/v1/employees
         @PostMapping("/employees")

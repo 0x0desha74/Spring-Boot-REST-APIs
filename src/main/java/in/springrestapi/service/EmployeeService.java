@@ -1,12 +1,12 @@
-package in.springrestapi.Services;
+package in.springrestapi.service;
 
-import in.springrestapi.Models.Employee;
+import in.springrestapi.model.Employee;
 
 import java.util.List;
 
 
-public interface IEmployeeService {
-    List<Employee> getEmployees();
+public interface EmployeeService {
+    List<Employee> getEmployees(int pageNumber,int pageSize);
     Employee SaveEmployee(Employee employee);
     Employee getEmployee(Long id);
     void deleteEmployee(Long id);
@@ -14,4 +14,5 @@ public interface IEmployeeService {
     List<Employee> getEmployeeByName(String name);
     List<Employee> getEmployeesByNameAndLocation(String name, String location);
     List<Employee> getEmployeesByKeyword(String keyword);
+    List<Employee> getEmployeesByNameOrLocation(String name,String location);
 }
