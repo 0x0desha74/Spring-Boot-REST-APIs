@@ -1,6 +1,6 @@
 package in.springrestapi.model;
 
-import in.springrestapi.request.EmployeeRequest;
+import in.springrestapi.dto.EmployeeDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +36,7 @@ public class Employee {
 
     private String location;
    @JoinColumn(name = "department_id")
-   @OneToOne
+   @ManyToOne
     private Department department;
 
     @CreationTimestamp
@@ -48,7 +48,7 @@ public class Employee {
     private Date updatedAt;
 
 
-    public Employee(EmployeeRequest req) {
+    public Employee(EmployeeDto req) {
         this.name = req.getName();
         this.age = req.getAge();
         this.email = req.getEmail();

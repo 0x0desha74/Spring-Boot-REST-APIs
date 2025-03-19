@@ -1,5 +1,6 @@
 package in.springrestapi.repository;
 
+import in.springrestapi.model.Department;
 import in.springrestapi.model.Employee;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,5 +27,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query("DELETE Employee WHERE name = :name")
     int deleteEmployeeByName(String name);
-    List<Employee> findByDepartmentName(String name);
+    List<Employee> findByDepartmentId(Long id);
+
 }

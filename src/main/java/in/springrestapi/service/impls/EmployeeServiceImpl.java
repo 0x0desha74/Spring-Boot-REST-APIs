@@ -1,6 +1,9 @@
 package in.springrestapi.service.impls;
 
+import in.springrestapi.dto.EmployeeDto;
+import in.springrestapi.model.Department;
 import in.springrestapi.model.Employee;
+import in.springrestapi.repository.DepartmentRepository;
 import in.springrestapi.repository.EmployeeRepository;
 import in.springrestapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,8 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
    @Autowired
     private EmployeeRepository eRepository;
-
+    @Autowired
+    private DepartmentRepository dRepository;
 
     @Override
     public List<Employee> getEmployees(int pageNumber, int pageSize) {
@@ -26,9 +30,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee SaveEmployee(Employee entity) {
-        return eRepository.save(entity);
+    public Employee SaveEmployee(EmployeeDto employeeDto) {
+        //Retrieve the department
+        Department department = dRepository.findById(employeeDto.getDepartment_id())
+                .orElseThrow(()-> new RuntimeException("Department not found"));
+        //Mapping dto to entity
+         Employee employee = new Employee(employeeDto);
+         //Set the department
+        employee.setDepartment(department);
+        //Create Employee
+        return eRepository.save(employee);
     }
+
+
 
     @Override
     public Employee getEmployee(Long id) {
@@ -77,6 +91,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public int deleteEmployeeByName(String name) {
         return eRepository.deleteEmployeeByName(name);
+    }
+
+    @Override
+    public List<Employee> getEmployeeByDepartmentId(Long id) {
+        return eRepository.findByDepartmentId(id);
     }
 
 

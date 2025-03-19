@@ -1,9 +1,8 @@
     package in.springrestapi.controller;
-    import in.springrestapi.model.Department;
     import in.springrestapi.model.Employee;
     import in.springrestapi.repository.DepartmentRepository;
     import in.springrestapi.repository.EmployeeRepository;
-    import in.springrestapi.request.EmployeeRequest;
+    import in.springrestapi.dto.EmployeeDto;
     import in.springrestapi.service.EmployeeService;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +18,7 @@
     public class EmployeesController {
         @Autowired
         private EmployeeService eService;
-        @Autowired
-        private DepartmentRepository dRepo;
-        @Autowired
-        private EmployeeRepository eRepo;
+
 
         //GET : /api/v1/employees
         @GetMapping("/employees")
@@ -63,22 +59,17 @@
         }
 
         @GetMapping("employees/filterByDepartment")
-        public ResponseEntity<List<Employee>> getEmployeeByDepartmentName(@RequestParam String department){
-            return new ResponseEntity<>(eRepo.findByDepartmentName(department),HttpStatus.OK);
+        public ResponseEntity<List<Employee>> getEmployeeByDepartmentName(@RequestParam Long id){
+            return new ResponseEntity<>(eService.getEmployeeByDepartmentId(id),HttpStatus.OK); //Data JPA
         }
 
 
 
         //POST : /api/v1/employees
         @PostMapping("/employees")
-        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid EmployeeRequest employeeReq) {
-            var department = new Department();
-            department.setName(employeeReq.getDepartment());
-           department= dRepo.save(department);
-            Employee employee = new Employee(employeeReq);
-            employee.setDepartment(department);
-            employee =  eRepo.save(employee);
-            return new ResponseEntity<>( employee,HttpStatus.CREATED);
+        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid EmployeeDto model) {
+
+            return new ResponseEntity<>(eService.SaveEmployee(model),HttpStatus.CREATED);
         }
 
         //PUT : /api/v1/employees
