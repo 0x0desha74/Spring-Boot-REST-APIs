@@ -20,5 +20,7 @@ public class Department {
     private Long id;
     @NotBlank(message = "Name should not be null")
     private String name;
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees;
 
 }

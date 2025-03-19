@@ -1,8 +1,6 @@
     package in.springrestapi.controller;
     import in.springrestapi.model.Employee;
-    import in.springrestapi.repository.DepartmentRepository;
-    import in.springrestapi.repository.EmployeeRepository;
-    import in.springrestapi.dto.EmployeeDto;
+    import in.springrestapi.dto.EmployeeDTO;
     import in.springrestapi.service.EmployeeService;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +65,7 @@
 
         //POST : /api/v1/employees
         @PostMapping("/employees")
-        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid EmployeeDto model) {
+        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid EmployeeDTO model) {
 
             return new ResponseEntity<>(eService.SaveEmployee(model),HttpStatus.CREATED);
         }

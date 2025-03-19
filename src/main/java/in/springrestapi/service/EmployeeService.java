@@ -1,6 +1,6 @@
 package in.springrestapi.service;
 
-import in.springrestapi.dto.EmployeeDto;
+import in.springrestapi.dto.EmployeeDTO;
 import in.springrestapi.model.Employee;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface EmployeeService {
     List<Employee> getEmployees(int pageNumber,int pageSize);
-    Employee SaveEmployee(EmployeeDto employeeDto);
+    Employee SaveEmployee(EmployeeDTO employeeDto);
     Employee getEmployee(Long id);
     void deleteEmployee(Long id);
     Employee updateEmployee(Employee entity);

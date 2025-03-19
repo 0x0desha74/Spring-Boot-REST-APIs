@@ -1,6 +1,7 @@
 package in.springrestapi.model;
 
-import in.springrestapi.dto.EmployeeDto;
+
+import in.springrestapi.dto.EmployeeDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -48,10 +49,10 @@ public class Employee {
     private Date updatedAt;
 
 
-    public Employee(EmployeeDto req) {
-        this.name = req.getName();
-        this.age = req.getAge();
-        this.email = req.getEmail();
-        this.location = req.getLocation();
+    public Employee(EmployeeDTO empDto) {
+        this.name = empDto.getName();
+        this.age = empDto.getAge();
+        this.email = empDto.getEmail();
+        this.location = empDto.getLocation();
     }
 }

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmployeeDto {
+public class EmployeeDTO {
     @NotBlank(message = "Name should not be null")
     private String name;
     private Long department_id;

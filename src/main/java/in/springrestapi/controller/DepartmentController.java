@@ -1,6 +1,7 @@
 package in.springrestapi.controller;
 
 
+import in.springrestapi.dto.DepartmentToReturnDto;
 import in.springrestapi.model.Department;
 import in.springrestapi.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class DepartmentController {
     private DepartmentService dService;
 
     @GetMapping("departments")
-    public ResponseEntity<List<Department>> getDepartments(){
+    public ResponseEntity<List<DepartmentToReturnDto>> getDepartments(){
         return new ResponseEntity<>(dService.getAllDepartments(), HttpStatus.OK);
     }
 
