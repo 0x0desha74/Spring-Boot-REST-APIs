@@ -1,5 +1,9 @@
     package in.springrestapi.controller;
+    import in.springrestapi.model.Department;
     import in.springrestapi.model.Employee;
+    import in.springrestapi.repository.DepartmentRepository;
+    import in.springrestapi.repository.EmployeeRepository;
+    import in.springrestapi.request.EmployeeRequest;
     import in.springrestapi.service.EmployeeService;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +19,10 @@
     public class EmployeesController {
         @Autowired
         private EmployeeService eService;
-
-
+        @Autowired
+        private DepartmentRepository dRepo;
+        @Autowired
+        private EmployeeRepository eRepo;
 
         //GET : /api/v1/employees
         @GetMapping("/employees")
@@ -56,10 +62,23 @@
             return new ResponseEntity<>(eService.getEmployeesByNameOrLocation(name,location),HttpStatus.OK);
         }
 
+        @GetMapping("employees/filterByDepartment")
+        public ResponseEntity<List<Employee>> getEmployeeByDepartmentName(@RequestParam String department){
+            return new ResponseEntity<>(eRepo.findByDepartmentName(department),HttpStatus.OK);
+        }
+
+
+
         //POST : /api/v1/employees
         @PostMapping("/employees")
-        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid Employee employee) {
-            return new ResponseEntity<>( eService.SaveEmployee(employee),HttpStatus.CREATED);
+        public ResponseEntity<Employee> addEmployee( @RequestBody @Valid EmployeeRequest employeeReq) {
+            var department = new Department();
+            department.setName(employeeReq.getDepartment());
+           department= dRepo.save(department);
+            Employee employee = new Employee(employeeReq);
+            employee.setDepartment(department);
+            employee =  eRepo.save(employee);
+            return new ResponseEntity<>( employee,HttpStatus.CREATED);
         }
 
         //PUT : /api/v1/employees
@@ -76,6 +95,12 @@
         public ResponseEntity<HttpStatus> deleteEmployee(@RequestParam Long id) {
             eService.deleteEmployee(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+
+        @DeleteMapping("employees/delete")
+        public ResponseEntity<String> deleteByName(@RequestParam String name){
+            return new ResponseEntity<>(eService.deleteEmployeeByName(name)+ "Deleted Records",HttpStatus.NO_CONTENT);
         }
 
     }

@@ -3,9 +3,11 @@ package in.springrestapi.repository;
 import in.springrestapi.model.Employee;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,5 +22,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByNameContaining(String keyword, Sort sort);
     @Query("FROM Employee WHERE name = :name OR location = :location")
     List<Employee> getEmployeesByNameOrLocation(String name,String location);
-
+    @Transactional
+    @Modifying
+    @Query("DELETE Employee WHERE name = :name")
+    int deleteEmployeeByName(String name);
+    List<Employee> findByDepartmentName(String name);
 }

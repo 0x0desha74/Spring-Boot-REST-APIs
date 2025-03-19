@@ -1,9 +1,11 @@
 package in.springrestapi.model;
 
+import in.springrestapi.request.EmployeeRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,6 +19,7 @@ import java.util.Date;
 @ToString
 @Entity
 @Table(name = "employees")
+@NoArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +35,9 @@ public class Employee {
     private String email;
 
     private String location;
-    @NotBlank
-    private String department;
+   @JoinColumn(name = "department_id")
+   @OneToOne
+    private Department department;
 
     @CreationTimestamp
     @Column( name = "created_at",nullable = false, updatable = false)
@@ -42,4 +46,12 @@ public class Employee {
     @UpdateTimestamp
     @Column(name ="updated_at")
     private Date updatedAt;
+
+
+    public Employee(EmployeeRequest req) {
+        this.name = req.getName();
+        this.age = req.getAge();
+        this.email = req.getEmail();
+        this.location = req.getLocation();
+    }
 }
