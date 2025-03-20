@@ -35,6 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                         EmployeeToReturnDto empDto = new EmployeeToReturnDto();
                         empDto.setId(emp.getId());
                         empDto.setName(emp.getName());
+
                         empDto.setEmail(emp.getEmail());
                         return empDto;
                     })
